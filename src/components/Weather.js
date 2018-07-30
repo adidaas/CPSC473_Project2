@@ -2,42 +2,65 @@ import React from 'react'
 
 const Weather = (props) => {
 
-
+    var currentDate = new Date();
+    var previousDate = new Date('2010-5-5');
     return (
-        <div>
+        <div style={{margin: 10}}>
+                {
+                    props.city && props.country &&                     
+                    <p className="weather__key">Location: 
+                    <span  className="weather__value"> {props.city}, {props.country}</span>
+                    </p>   
+                }
                 { 
-                    props.city && props.country && <p className="weather__key">Location: 
-                    <span  className="weather__value">{props.city}, {props.country}</span>
-                    </p>
+                    props.temperature && 
+                    <div><h2 style={{color: 'white'}}>Current Weather: </h2>                    
+                    </div>
                 }
                 { 
                     props.temperature && <p className="weather__key">Temperature: 
-                    <span className="weather__value">{props.temperature}</span>
+                    <span className="weather__value"> {props.temperature}°</span>
                     </p>
                 }
                 { 
                     props.humidity && <p className="weather__key">Humidity: 
-                    <span className="weather__value">{props.humidity}</span>
+                    <span className="weather__value"> {props.humidity}</span>
                     </p>
                 }
                 { 
                     props.description && <p className="weather__key">Conditions: 
-                    <span className="weather__value">{props.description}</span>
+                    <span className="weather__value"> {props.description}</span>
                     </p>
                 }             
-                {                     
-                    <div>
+                {        
+                    props.list &&             
+                    <div style={{color:'white'}}>
                     <h2>Forecast: </h2>
-                    <ul>
+                    <ul style={{listStyleType: 'none'}}>
                         {props.list.map(function(item, index){
-                            return (
-                            <div style={{color:'white'}}>
-                                <strong>Date</strong> {item.dt_txt}
-                                <p>Temperature: {item.main.temp}</p>
-                                <p>Humidity: {item.main.humidity}</p>
-                                <p>Wind Speed: {item.wind.speed}</p>
-                            </div>
-                            )
+                            currentDate = new Date(item.dt_txt);  
+
+                            console.log('current:'  + currentDate.getDate());
+                            console.log('previous:'  + previousDate.getDate());
+
+                            if (currentDate.getDate() != previousDate.getDate()) {
+                                previousDate = new Date(currentDate);
+                                return (
+                                    <li style={{color:'black', backgroundColor: '#ffff99', fontWeight: 800, width: 160, 
+                                            height: 250, margin: 3, textAlign: 'center', float: 'left' }}>
+                                        {currentDate.getMonth()}-{currentDate.getDate()}-{currentDate.getFullYear()}
+                                        <p></p>
+                                        <h2> {item.main.temp}°</h2>
+                                        <p>{item.weather[0].description}</p>
+                                        <p>Humidity: {item.main.humidity}</p>
+                                        <p>Wind Speed: {item.wind.speed}</p>
+                                    </li>
+                                )       
+                                
+                            }
+                            
+                            console.log('3');
+                            console.log('previous again:'  + previousDate.getDate());
                         })
                         }
                     </ul>

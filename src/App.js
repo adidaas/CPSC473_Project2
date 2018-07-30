@@ -16,7 +16,7 @@ class App extends Component {
         country:        undefined,
         humidity:       undefined,
         description:    undefined,
-        list:           [],
+        list:           undefined,
         error:          undefined,
     }    
 
@@ -40,7 +40,7 @@ class App extends Component {
 
         // similar to HTTP request get
         const api_call = await fetch('http://api.openweathermap.org/data/2.5/weather?q=' +
-        city + ',' + country + '&units=metric&appid=' + API_KEY);
+        city + ',' + country + '&units=imperial&appid=' + API_KEY);
         console.log(api_call);
         // similar to json.parse
         const data = await api_call.json();
@@ -81,7 +81,7 @@ class App extends Component {
 
         // similar to HTTP request get
         const api_call = await fetch('http://api.openweathermap.org/data/2.5/forecast?q=' +
-        city + ',' + country + '&appid=' + API_KEY);
+        city + ',' + country + '&units=imperial&appid=' + API_KEY);
         
         console.log(api_call);
         // similar to json.parse
@@ -113,6 +113,27 @@ class App extends Component {
     }
 
     render() {
+        // Build class names with dynamic data
+        var weatherClass = 'wi wi-owm-' + this.state.weather;
+        var bgColorClass = 'weather-widget '; // very-warm, warm, normal, cold, very-cold
+
+        // Set the background colour based on the temperature
+        if (this.state.temp >= 30) {
+            bgColorClass += 'very-warm';
+        }
+        else if (this.state.temp > 20 && this.state.temp < 30) {
+            bgColorClass += 'warm';
+        }
+        else if (this.state.temp > 10 && this.state.temp < 20) {
+            bgColorClass += 'normal';
+        }
+        else if (this.state.temp > 0 && this.state.temp < 10) {
+            bgColorClass += 'cold';
+        }
+        else if (this.state.temp <= 0) {
+            bgColorClass += 'very-cold';
+        }
+
         return (
             <div>
             <div className="wrapper">
@@ -137,12 +158,11 @@ class App extends Component {
                                     error={this.state.error} 
                                 />
                             </div >
-
                         </div >
                     </div >
                 </div>
             </div>            
-        </div>
+        </div>        
         );
     }
 }
