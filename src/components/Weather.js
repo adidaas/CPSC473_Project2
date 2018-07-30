@@ -4,6 +4,7 @@ const Weather = (props) => {
 
     var currentDate = new Date();
     var previousDate = new Date('2010-5-5');
+    var boxShadow =  "10px 5px 5px black";
     return (
         <div style={{margin: 10}}>
                 {
@@ -14,7 +15,7 @@ const Weather = (props) => {
                 }
                 { 
                     props.temperature && 
-                    <div><h2 style={{color: 'white'}}>Current Weather: </h2>                    
+                    <div><h2 className="weather__heading" style={{color: 'white'}}>Current Weather: </h2>                    
                     </div>
                 }
                 { 
@@ -35,7 +36,7 @@ const Weather = (props) => {
                 {        
                     props.list &&             
                     <div style={{color:'white'}}>
-                    <h2>Forecast: </h2>
+                    <h2 className="weather__heading">Forecast: </h2>
                     <ul style={{listStyleType: 'none'}}>
                         {props.list.map(function(item, index){
                             currentDate = new Date(item.dt_txt);  
@@ -47,7 +48,8 @@ const Weather = (props) => {
                                 previousDate = new Date(currentDate);
                                 return (
                                     <li style={{color:'black', backgroundColor: '#ffff99', fontWeight: 800, width: 160, 
-                                            height: 250, margin: 3, textAlign: 'center', float: 'left' }}>
+                                            height: 250, margin: 3, textAlign: 'center', float: 'left', border: 'solid',
+                                            borderColor: '#b2b26b' }}>
                                         {currentDate.getMonth()}-{currentDate.getDate()}-{currentDate.getFullYear()}
                                         <p></p>
                                         <h2> {item.main.temp}°</h2>

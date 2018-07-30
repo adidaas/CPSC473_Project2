@@ -144,7 +144,7 @@ class App extends Component {
                                 <Titles />
                             </div >
 
-                            <div className="col-xs-2 form-container">
+                            <div className="col-xs-2 form-container" style={{borderColor: '#2a4560', borderStyle: 'solid'}}>
                                 <Form getWeather={this.getWeather} getFiveDayForecast={this.getFiveDayForecast} 
                                         handleCityChange={this.handleCityChange} handleCountryChange={this.handleCountryChange} />
 
